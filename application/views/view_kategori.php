@@ -19,7 +19,7 @@
                             <tr>
                                 <th style='width:30px; text-align:center'>#No</th>
                                 <th>Kategori Barang</th>
-                                <th style='width:30px; text-align:center'>Nama Kategori</th>
+                                <th style='width:120px; text-align:center'>Nama Kategori</th>
                             </tr>
                             </thead>
                             <tbody id="tbl_data">
