@@ -1,3 +1,4 @@
+
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Kategori extends CI_Controller{ 
@@ -69,7 +70,6 @@ class Kategori extends CI_Controller{
         echo json_encode($data);
     }
     
-
     function hapusData(){ 
         if ($this->input->is_ajax_request()) { 
             $id = $this->input->post('id_kategori'); 

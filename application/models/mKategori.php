@@ -1,3 +1,4 @@
+
 <?php 
 class mKategori extends CI_Model { 
     function getData(){ 

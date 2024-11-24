@@ -132,3 +132,4 @@ class CI_Benchmark {
 	}
 
 }
+
