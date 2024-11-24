@@ -1,32 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Satuan Produk</title>
-    <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-</head>
-<body>
-    <h2 class="text-center mt-3">Menampilkan Data Satuan</h2>
-    <table border="1" cellspacing = "0" cellpadding = "10" class="table table-striped mt-5">
-        <tr>
-            <td style="width: 30px">No</td>
-            <td style="width: 30px">ID</td>
-            <td scope="col">Nama Satuan</td>
-        </tr>
-        
-        <?php foreach ($data->result() as $i => $row) : ?>
-            <tr>
-                <td><?= ++$i; ?></td>
-                <td><?= $row->id_satuan ?></td>
-                <td><?= $row->nama_satuan ?></td>
-            </tr>
-        <?php endforeach;?>
-    </table>
-
-    <!-- load jquery js file -->
-    <script src="https://ajax.googleapis.com.ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- load bootstrap js file -->
-    <script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
-</body>
-</html>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-danger">
+            <div class="box-header with-border color-header">
+                <h3 class="box-title"><i class="fa fa-th"></i> Data Satuan Barang</h3>
+                <div class="box-tools pull-right">
+                    <a class="btn btn-default btn-sm" href="<?php echo base_url('Satuan'); ?>">
+                        <span class="fa fa-refresh"></span> Refresh
+                    </a>
+                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#form-add"> <span class="fa fa-plus"></span> Tambah</butto>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style='width:30px'>#</th>
+                                    <th style='width:30px'>ID</th>
+                                    <th scope="col">Nama Satuan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($data->result() as $i => $row) : ?>
+                                    <tr>
+                                        <td><?= ++$i; ?></td>
+                                        <td><?= $row->id_satuan ?></td>
+                                        <td><?= $row->nama_satuan ?></td>
+                                    </tr>
+                                <?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

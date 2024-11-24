@@ -1,17 +1,15 @@
 <?php 
-
-class Kategori extends CI_Controller {
-
-    function __construct() {
-        parent::__construct();
-        $this->load->model("mKategori"); //panggil mKategori yang ada di folder Models
+defined('BASEPATH') OR exit('No direct script access allowed');
+class Kategori extends CI_Controller{ 
+    function __construct(){  
+        parent::__construct(); 
+        $this->load->model('mKategori'); 
     }
-
-    function index() {
-        $data["data"] = $this->mKategori->getData(); // panggil function getData
-        $this->load->view("view_kategori",$data); // tampilkan hasil pada view
+    function index(){ 
+        $data['page'] = "Kategori"; 
+        $data['judul'] = "Data Kategori"; 
+        $data['deskripsi'] = "Manage Data Kategori"; 
+        $data['data'] = $this->mKategori->getData(); 
+        $this->template->views('view_kategori', $data);
     }
 }
-
-
-?>
