@@ -13,6 +13,15 @@ class Satuan extends CI_Controller {
         $data["data"] = $this->mSatuan->getData(); // panggil function getData
         $this->template->views("view_satuan",$data); // tampilkan hasil pada view
     }
+    function tampilkanData(){ 
+        $data = $this->mSatuan->getData(); 
+        echo json_encode($data);
+    }
+    function tampilkanDataByID(){ 
+        $id_satuan = $this->input->post('id_satuan'); 
+        $data = $this->mSatuan->getDataById($id_satuan); 
+        echo json_encode($data);
+    }
 }
 
 

@@ -68,32 +68,6 @@ $(document).ready(function () {
     }); 
 });
 
-$('#harga_jual').on('keyup click change paste input', function (event) { 
-    $(this).val(function (index, value) { 
-        if (value != "") { 
-            //return "$" value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
-            var decimalCount; 
-            value.match(/\./g) === null? decimalCount = 0 : decimalCount = value.match(/\./g); 
-
-            if (decimalCount.length > 1) { 
-                value = value.slice(0, -1); 
-            } 
-
-            var components = value.toString().split("."); 
-            if (components.length === 1) 
-                components[0] = value; 
-            components [0] = components[e].replace(/\D/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,','); 
-            if (components.length === 2) { 
-                components [1] = components (1).replace(/\D/g,'').replace(/^\d{3}$/,''); 
-            } 
-            
-            if (components.join('.') != '') 
-                return components.join('.'); 
-            else 
-            return ''; 
-        } 
-    }); 
-});
 
 $('#harga_beli').on('keyup click change paste input', function (event) {
     $(this).val(function (index, value) {
@@ -111,7 +85,7 @@ $('#harga_beli').on('keyup click change paste input', function (event) {
                 components[0] = value;
             components[0] = components[0].replace(/\D/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,',');
             if (components.length === 2) {
-                components[1] = components[1].replace(/\D/g, '').replace(/^\d{3}$/,'');
+                components[1] = components[1].replace(/\D/g,'').replace(/^\d{3}$/,'');
             }
             
             if (components.join(".") != '')
@@ -138,7 +112,34 @@ $('#harga_pokok').on('keyup click change paste input', function (event) {
                 components[0] = value;
             components[0] = components[0].replace(/\D/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,',');
             if (components.length === 2) {
-                components [1] = components[1].replace(/\D/g,'').replace(/^\d{3}$/,''); 
+                components[1] = components[1].replace(/\D/g,'').replace(/^\d{3}$/,''); 
+            } 
+            
+            if (components.join('.') != '') 
+                return components.join('.'); 
+            else 
+            return ''; 
+        } 
+    });
+});
+
+$('#harga_jual').on('keyup click change paste input', function (event) { 
+    $(this).val(function (index, value) { 
+        if (value != "") { 
+            //return '$' value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?1\d))/g, ","); 
+            var decimalCount; 
+            value.match(/\./g) === null? decimalCount = 0 : decimalCount = value.match(/\./g);
+            
+            if (decimalCount.length > 1) { 
+                value = value.slice(0, -1); 
+            }
+            
+            var components = value.toString().split("."); 
+            if (components.length === 1)
+                components[0] = value;
+            components[0] = components[0].replace(/\D/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,',');
+            if (components.length === 2) {
+                components[1] = components[1].replace(/\D/g,'').replace(/^\d{3}$/,''); 
             } 
             
             if (components.join('.') != '') 

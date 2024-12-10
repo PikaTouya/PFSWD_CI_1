@@ -64,7 +64,7 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label for="">Nama Barang <span class="text-danger">*</span></label>
-                                <input type="text" id="nama_produk" name="nama_produk" autocomplete="off" class="form-control input-sm" placeholders="Nama Barang"> 
+                                <input type="text" id="nama_produk" name="nama_produk" autocomplete="off" class="form-control input-sm" placeholder="Nama Barang"> 
                             </div> 
                         </div>
                     </div>
@@ -77,8 +77,8 @@
                                 <select name="id_satuan" id="id_satuan" class="form-control">
                                     <option value="">- Pilih Satuan -</option> 
                                         <?php foreach ($satuan as $row) { 
-                                            echo "<option value='$row->id_satuan'>$row->nana_satuan</option>"; 
-                                        } ?> 
+                                            echo "<option value='$row->id_satuan'>$row->nama_satuan</option>"; 
+                                        } ?>
                                 </select> 
                                 <span class="help-block"></span> 
                             </div> 
@@ -96,7 +96,7 @@
                         <div class="col-md-4"> 
                             <div class="form-group"> 
                                 <label for="">Harga Beli <span class="text-danger">*</span></label> 
-                                <input type="text" id="harga_beli" name="harga_beli" autocomplete="off" class="form-control input-sm" onkeypress="return isNumber(this, event);" placeholders ="Harga Beli">
+                                <input type="text" id="harga_beli" name="harga_beli" autocomplete="off" class="form-control input-sm" onkeypress="return isNumber(this, event);" placeholder="Harga Beli">
                             </div>
                         </div>
                         <div class="col-md-4"> 
@@ -105,9 +105,9 @@
                                 <input type="text" id="harga_pokok" name="harga_pokok" autocomplete="off" class="form-control input-sm" onkeypress="return isNumber(this, event);" placeholder="Harga Pokok"> 
                             </div> 
                         </div> 
-                        <div class="col-nd-4"> 
+                        <div class="col-md-4"> 
                             <div class="form-group"> 
-                                <label for="">Harga Jual <span class="text-danger"></span></label> 
+                                <label for="">Harga Jual <span class="text-danger">*</span></label>
                                 <input type="text" id="harga_jual" name="harga_jual" autocomplete="off" class="form-control input-sm" onkeypress="return isNumber(this, event);" placeholder="Harga Jual"> 
                             </div> 
                         </div> 
@@ -116,7 +116,7 @@
             </form> 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button> 
-                <button type="button" class="btn btn-primary" id="btnSimpan" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing ">Simpas Data</button> 
+                <button type="button" class="btn btn-primary btnSimpan" id="btnSimpan" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing">Simpan Data</button> 
             </div> 
         </div> 
     </div>
@@ -125,45 +125,177 @@
 <script src="<?php echo base_url().'assets/js/validate.js'?>"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-    var btnEdit = false; 
-    tampil_data(); 
-    
-    // Menampilkan data di tabel
-    function tampil_data() { 
-        $.ajax({ 
-            url: '<?php echo base_url(); ?>Produk/tampilkanData', 
-            type: "POST", 
-            dataType: "json",
-            success: function (response) { 
-                var i;
-                var no = 0;
-                var html = "";
-                for (i = 0; i < response.length; i++) { 
-                    no++; 
-                    html = html + '<tr>'
-                        + '<td>' + no + '</td>'
-                        + '<td>' + response[i].nama_produk + '</td>' 
-                        + '<td>' + response[i].nama_kategori + '</td>' 
-                        + '<td>' + response[i].nama_satuan + '</td>' 
-                        + '<td style="text-align: right;">' + new Intl.NumberFormat('id-ID').format(response[i].harga_beli) + '</td>' 
-                        + '<td style="text-align: right;">' + new Intl.NumberFormat('id-ID').format(response[i].harga_pokok) + '</td>' 
-                        + '<td style="text-align: right;">' + new Intl.NumberFormat('id-ID').format(response[i].harga_jual) + '</td>' 
-                        + '<td><center>' + '<span><button edit-id="' + response[i].id_produk + 
-                            '" class="btn btn-success btn-xs btn-edit"><i class="fa fa-edit"></i> Edit</button><button style="margin-left: 5px;" data-id="' + 
-                            response[i].id_produk + 
-                            '" class="btn btn-danger btn-xs btn_hapus"><i class="fa fa-trash"></i> Hapus</button></span>' + '</center></td>'
-                        + '</tr>';
+        var btnEdit = false; 
+        tampil_data();
+        // Menampilkan data di tabel
+        function tampil_data() { 
+            $.ajax({ 
+                url: '<?php echo base_url(); ?>Produk/tampilkanData', 
+                type: "POST", 
+                dataType: "json",
+                success: function (response) { 
+                    var i;
+                    var no = 0;
+                    var html = "";
+                    for (i = 0; i < response.length; i++) { 
+                        no++; 
+                        html = html + '<tr>'
+                            + '<td>' + no + '</td>'
+                            + '<td>' + response[i].nama_produk + '</td>' 
+                            + '<td>' + response[i].nama_kategori + '</td>' 
+                            + '<td>' + response[i].nama_satuan + '</td>' 
+                            + '<td style="text-align: right;">' + new Intl.NumberFormat('id-ID').format(response[i].harga_beli) + '</td>' 
+                            + '<td style="text-align: right;">' + new Intl.NumberFormat('id-ID').format(response[i].harga_pokok) + '</td>' 
+                            + '<td style="text-align: right;">' + new Intl.NumberFormat('id-ID').format(response[i].harga_jual) + '</td>' 
+                            + '<td><center>' + '<span><button edit-id="' + response[i].id_produk + 
+                                '" class="btn btn-success btn-xs btn_edit"><i class="fa fa-edit"></i> Edit</button><button style="margin-left: 5px;" data-id="' + 
+                                response[i].id_produk + 
+                                '" class="btn btn-danger btn-xs btn_hapus"><i class="fa fa-trash"></i> Hapus</button></span>' + '</center></td>'
+                            + '</tr>';
+                    }
+                    $("#tbl_data").html(html); 
+                    $("#mydata").DataTable();
+                },
+                error: function (xhr, ajaxOptions, thrownError) { 
+                    alert(xhr.status); 
+                    alert(thrownError); 
                 }
-
-                $("#tbl_data").html(html); 
-                $("#mydata").DataTable();
-            },
-            error: function (xhr, ajaxOptions, thrownError) { 
-                alert(xhr.status); 
-                alert(thrownError); 
-            }
+            });
+        }
+        // });
+        //Memanggil Modal Satuan 
+        $(document).on("click", "#btnTambah", function(e){ 
+            e.preventDefault(); 
+            btnEdit = false; 
+            $('#form_add')[0].reset(); // reset form on modals 
+            $('.form-group').removeClass('has-error'); // clear error class 
+            $('.help-block').empty(); // clear error string 
+            $('#formModal').modal('show'); // Tampilkan bootstrap modal 
+            $('.modal-title').text('Tambah Barang'); // Set Judul modal 
         });
-    }
-});
+        //Edit Produk 
+        $("#tbl_data").on("click",'.btn_edit', function(){ 
+            var id_produk = $(this).attr('edit-id'); 
+            btnEdit = true; 
 
+            $.ajax({ 
+                url: '<?php echo base_url(); ?>produk/tampilkanDataByID', 
+                type: 'POST', 
+                data: {id_produk:id_produk}, 
+                dataType: 'json', 
+                success: function(response) { 
+                    $('#form_add')[0].reset(); // reset form on modals 
+                    $(".form-group").removeClass('has-error'); // clear error class 
+                    $('.help-block').empty(); // clear error string 
+                    $('.modal-title').text('Edit Barang'); // Set Title to Bootstrap modal title 
+                    $('input[name="nama_produk"]').val(response.nama_produk); 
+                    $('input[name="id_produk"]').val(response.id_produk); 
+                    $('select[name="id_kategori"]').val(response.id_kategori); 
+                    $('select[name="id_satuan"]').val(response.id_satuan); 
+                    $('input[name="barcode"]').val(response.barcode); 
+                    $('input[name="harga_beli"]').val(parseFloat(response.harga_beli).toFixed(0)); 
+                    $('input[name="harga_pokok"]').val(parseFloat(response.harga_pokok).toFixed(0)); 
+                    $('input[name="harga_jual"]').val(parseFloat(response.harga_jual).toFixed(0)); 
+                    $("#formModal").modal('show'); 
+                } 
+            }) 
+        });
+        //Kirim Data Proses Save/Update ke Controller 
+        $(document).on("click", "#btnSimpan", function(e){ 
+            e.preventDefault(); 
+            var $this = $(this); 
+            var id_produk = $("#id_produk").val(); 
+            var nama_produk = $("#nama_produk").val(); 
+            var barcode = $("#barcode").val(); 
+            var id_kategori = $('select[name="id_kategori"]').val(); 
+            var id_satuan = $('select[name="id_satuan"]').val(); 
+            var harga_jual = $('input[name="harga_jual"]').val().replace(/[,.]/g, ''); 
+            var harga_beli = $('input[name="harga_beli"]').val().replace(/[,.]/g, ''); 
+            var harga_pokok = $('input[name="harga_pokok"]').val().replace(/[,.]/g, ''); 
+
+            if (btnEdit){
+                var sURL='<?php echo base_url(); ?>produk/perbaruiData'; 
+            }else{ 
+                var sURL='<?php echo base_url(); ?>produk/tambahData'; 
+            } 
+            $.ajax({ 
+                url: sURL, 
+                type: "POST", 
+                dataType: "json", 
+                data: {id_produk:id_produk, nama_produk:nama_produk, barcode:barcode, id_kategori:id_kategori,
+                    id_satuan:id_satuan, harga_beli:harga_beli, harga_pokok:harga_pokok, harga_jual:harga_jual      
+                },
+                beforeSend: function () { 
+                    $this.button("loading"); 
+                }, 
+                complete: function () { 
+                    $this.button('reset'); 
+                },
+                success: function(data){ 
+                    if (data.responce == "success") { 
+                        $("#form_add")[0].reset(); 
+                        $('.form-group').removeClass('has-error'); // clear error class 
+                        $('.help-block').empty(); // clear error string 
+                        $('#formModal').modal('hide'); 
+                        Swal.fire({ 
+                            text: 'Data berhasil di Simpan', 
+                            icon: 'success', 
+                            title: 'Saving Succes', 
+                            showConfirmButton: false, 
+                            timer: 1500 
+                        }); 
+                        $('#mydata').dataTable({"bDestroy": true}).fnDestroy(); 
+                        tampil_data(); 
+                    }else{ 
+                        Swal.fire('Error!', 'Ops! <br>' + data.message, 'error'); 
+                    } 
+                } 
+            }); 
+        });
+        //Hapus Data 
+        $("#tbl_data").on('click','.btn_hapus', function(e){ 
+            e.preventDefault(); 
+            var id_produk = $(this).attr('data-id'); 
+            Swal.fire({ 
+                title: 'Hapus Data?', 
+                text: 'Anda Yakin menghapus Data Barang ini?', 
+                icon: 'warning', 
+                showCancelButton: true, 
+                confirmButtonColor: '#d33', 
+                cancelButtonColor: '#3085d6', 
+                cancelButtonText: 'Tidak', 
+                confirmButtonText: 'Ya', 
+                showLoaderOnConfirm: true, 
+                preConfirm: () => { 
+                    return new Promise(function(resolve, reject) { 
+                        $.ajax({ 
+                            url: '<?php echo base_url(); ?>produk/hapusData', 
+                            type: 'POST', 
+                            dataType: "json", 
+                            data: {id_produk: id_produk}
+                        }) 
+                        .done(function(data) { 
+                            resolve(data) 
+                        }) 
+                        .fail(function() { 
+                            reject() 
+                        }); 
+                    }) 
+                }, 
+                allowOutsideClick: () => !swal.isLoading() 
+            }).then((result) => { 
+                    if (result.value) {
+                        $('#mydata').dataTable({"bDestroy": true}).fnDestroy(); 
+                        tampil_data(); 
+                        Swal.fire({ 
+                            icon: 'success', 
+                            title: 'Data Telah Berhasil di Hapus', 
+                            showConfirmButton: false, 
+                            timer: 1500 
+                        }) 
+                    } 
+                }) 
+        }); 
+
+    });
 </script>
