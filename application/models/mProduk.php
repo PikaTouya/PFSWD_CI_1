@@ -26,24 +26,24 @@ class mProduk extends CI_Model {
         return $this->db->delete('tbl_m_produk'); 
     } 
     //Validasi Data Duplikat 
-    function cekDuplicate($kategori) { 
-        $this->db->where('nama_produk', $kategori); 
+    function cekDuplicate($produk) { 
+        $this->db->where('nama_produk', $produk); 
         $query = $this->db->get('tbl_m_produk'); 
         return $query->num_rows();
     }
     //Pembuat Kode Barang otomatis berdasarkan Kategoti 
-    function getcode($id_kategori){ 
-        $query = $this->db->query("SELECT MAX(RIGHT(id_produk,6)) AS kd_max FROM tbl_m_produk WHERE id_kategori = '$id_kategori'"); 
+    function getcode($id_produk){ 
+        $query = $this->db->query("SELECT MAX(RIGHT(id_produk,6)) AS kd_max FROM tbl_m_produk WHERE id_produk = '$id_produk'"); 
         $isCode = "";
         if($query->num_rows()>0){ 
             foreach ($query->result() as $k){ 
                 $tmp = ((int)$k->kd_max)+1; 
-                $isCode = sprintf("306", $tmp);
+                $isCode = sprintf("%06d", $tmp);
             } 
         }
         else{ 
             $isCode = "000001";
         }
-            return $id_kategori . $isCode;
+            return $id_produk . $isCode;
     }
 } 

@@ -47,7 +47,7 @@
             </div> 
             <form action="" method="post" id="form_add">
                 <div class="modal-body">
-                    <input type="hidden" id="id_produk" name="1d_produk">
+                    <input type="hidden" id="id_produk" name="id_produk">
                     <div class="row"> 
                         <div class="col-md-4"> 
                             <div class="form-group">
@@ -116,7 +116,7 @@
             </form> 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button> 
-                <button type="button" class="btn btn-primary btnSimpan" id="btnSimpan" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing">Simpan Data</button> 
+                <button type="button" class="btn btn-primary btnSimpan" id="btnSimpan" name="btnSimpan" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing">Simpan Data</button> 
             </div> 
         </div> 
     </div>
@@ -201,57 +201,59 @@
             }) 
         });
         //Kirim Data Proses Save/Update ke Controller 
-        $(document).on("click", "#btnSimpan", function(e){ 
-            e.preventDefault(); 
-            var $this = $(this); 
-            var id_produk = $("#id_produk").val(); 
-            var nama_produk = $("#nama_produk").val(); 
-            var barcode = $("#barcode").val(); 
-            var id_kategori = $('select[name="id_kategori"]').val(); 
-            var id_satuan = $('select[name="id_satuan"]').val(); 
-            var harga_jual = $('input[name="harga_jual"]').val().replace(/[,.]/g, ''); 
-            var harga_beli = $('input[name="harga_beli"]').val().replace(/[,.]/g, ''); 
-            var harga_pokok = $('input[name="harga_pokok"]').val().replace(/[,.]/g, ''); 
-
-            if (btnEdit){
-                var sURL='<?php echo base_url(); ?>produk/perbaruiData'; 
-            }else{ 
-                var sURL='<?php echo base_url(); ?>produk/tambahData'; 
-            } 
-            $.ajax({ 
-                url: sURL, 
-                type: "POST", 
-                dataType: "json", 
-                data: {id_produk:id_produk, nama_produk:nama_produk, barcode:barcode, id_kategori:id_kategori,
-                    id_satuan:id_satuan, harga_beli:harga_beli, harga_pokok:harga_pokok, harga_jual:harga_jual      
-                },
-                beforeSend: function () { 
-                    $this.button("loading"); 
-                }, 
-                complete: function () { 
-                    $this.button('reset'); 
-                },
-                success: function(data){ 
-                    if (data.responce == "success") { 
-                        $("#form_add")[0].reset(); 
-                        $('.form-group').removeClass('has-error'); // clear error class 
-                        $('.help-block').empty(); // clear error string 
-                        $('#formModal').modal('hide'); 
-                        Swal.fire({ 
-                            text: 'Data berhasil di Simpan', 
-                            icon: 'success', 
-                            title: 'Saving Succes', 
-                            showConfirmButton: false, 
-                            timer: 1500 
-                        }); 
-                        $('#mydata').dataTable({"bDestroy": true}).fnDestroy(); 
-                        tampil_data(); 
-                    }else{ 
-                        Swal.fire('Error!', 'Ops! <br>' + data.message, 'error'); 
-                    } 
+            $(document).on("click", "#btnSimpan", function(e){ 
+                e.preventDefault(); 
+                var $this = $(this); 
+                var id_produk = $("#id_produk").val(); 
+                var nama_produk = $("#nama_produk").val(); 
+                var barcode = $("#barcode").val(); 
+                var id_kategori = $('select[name="id_kategori"]').val(); 
+                var id_satuan = $('select[name="id_satuan"]').val(); 
+                var harga_jual = $('input[name="harga_jual"]').val().replace(/[,.]/g, ''); 
+                var harga_beli = $('input[name="harga_beli"]').val().replace(/[,.]/g, ''); 
+                var harga_pokok = $('input[name="harga_pokok"]').val().replace(/[,.]/g, ''); 
+                console.log(id_produk +nama_produk + harga_jual + 'aa');
+                if (btnEdit){
+                    var sURL='<?php echo base_url(); ?>produk/perbaruiData'; 
+                }else{ 
+                    var sURL='<?php echo base_url(); ?>produk/tambahData'; 
                 } 
-            }); 
-        });
+                
+                $.ajax({ 
+                    url: sURL, 
+                    method: 'post', 
+                    dataType: "json", 
+                    data: {id_produk:id_produk, nama_produk:nama_produk, barcode:barcode, id_kategori:id_kategori,
+                        id_satuan:id_satuan, harga_beli:harga_beli, harga_pokok:harga_pokok, harga_jual:harga_jual      
+                    },
+                    beforeSend: function () { 
+                        $this.button("loading"); 
+                    }, 
+                    complete: function () { 
+                        $this.button('reset'); 
+                    },
+                    success: function(data){ 
+                        if (data.responce == "success") { 
+                            $("#form_add")[0].reset(); 
+                            $('.form-group').removeClass('has-error'); // clear error class 
+                            $('.help-block').empty(); // clear error string 
+                            $('#formModal').modal('hide'); 
+                            Swal.fire({ 
+                                text: 'Data berhasil di Simpan', 
+                                icon: 'success', 
+                                title: 'Saving Succes', 
+                                showConfirmButton: false, 
+                                timer: 1500 
+                            }); 
+                            $('#mydata').dataTable({"bDestroy": true}).fnDestroy(); 
+                            tampil_data(); 
+                        }else{ 
+                            Swal.fire('Error!', 'Ops! <br>' + data.message, 'error'); 
+                        } 
+                    } 
+                }); 
+                
+            });
         //Hapus Data 
         $("#tbl_data").on('click','.btn_hapus', function(e){ 
             e.preventDefault(); 
